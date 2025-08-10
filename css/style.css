@@ -1,0 +1,248 @@
+/* Google Fonts - Noto Serif SC for a more elegant feel */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #0d47a1; /* 深蓝色 */
+    --secondary-color: #1565c0; /* 较亮的蓝色 */
+    --text-color: #333;
+    --bg-color: #f8f9fa;
+    --content-bg: #ffffff;
+    --border-color: #dee2e6;
+}
+
+body {
+    font-family: 'Noto Serif SC', serif;
+    line-height: 1.8;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 18px;
+}
+
+header {
+    background: var(--primary-color);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-bottom: 5px solid var(--secondary-color);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    margin: 0.5rem 0 0;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+nav {
+    background: var(--secondary-color);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* 在小屏幕上换行 */
+}
+
+nav ul li {
+    margin: 5px 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover, nav a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+main {
+    padding: 1rem;
+}
+
+.content-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem 3rem;
+    background: var(--content-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-color);
+}
+
+/* 章节内容样式 */
+#content h1, #content h2, #content h3, #content h4 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+}
+
+#content h1 { font-size: 2.2rem; }
+#content h2 { font-size: 1.8rem; }
+#content h3 { font-size: 1.5rem; }
+#content h4 { font-size: 1.2rem; }
+
+#content p, #content ul, #content ol {
+    margin-bottom: 1.2rem;
+}
+
+#content strong {
+    color: var(--secondary-color);
+}
+
+#content hr {
+    border: 0;
+    border-top: 2px solid var(--border-color);
+    margin: 3rem 0;
+}
+
+#content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95em;
+}
+
+#content th, #content td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+}
+
+#content thead {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 40px;
+    color: #777;
+    font-size: 0.9em;
+}
+
+/* MathJax 样式调整 */
+mjx-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* --- 新增的优化布局样式 --- */
+
+/* 卡片式/高亮区域样式 */
+.highlight-box, .definition-box, .theorem-box {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border-left: 5px solid var(--primary-color);
+    background-color: #f8f9fa; /* 使用主背景色或稍深的颜色 */
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.highlight-box h3, .definition-box h3, .theorem-box h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    border-bottom: none; /* 移除盒子内标题的下划线 */
+}
+
+/* 为不同类型的盒子添加不同的边框颜色 */
+.definition-box {
+    border-color: #28a745; /* 绿色 */
+}
+.definition-box h3 {
+    color: #28a745;
+}
+
+.theorem-box {
+    border-color: #dc3545; /* 红色 */
+}
+.theorem-box h3 {
+    color: #dc3545;
+}
+
+/* 图标样式 (使用简单的emoji作为示例) */
+.highlight-box h3::before, .definition-box h3::before, .theorem-box h3::before {
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+    font-family: sans-serif; /* 确保emoji正确显示 */
+}
+.highlight-box h3::before { content: '💡'; } /* 重点 */
+.definition-box h3::before { content: '📖'; } /* 定义 */
+.theorem-box h3::before { content: '📜'; } /* 定理 */
+
+
+/* 两栏布局 */
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+/* 在小屏幕上变为单栏 */
+@media (max-width: 768px) {
+    .two-column-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 交互式折叠区域 */
+details {
+    margin: 1.5rem 0;
+    background: #fdfdfd;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+details[open] {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+details summary {
+    padding: 1rem 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--secondary-color);
+    outline: none;
+    list-style-position: inside;
+}
+details summary:hover {
+    background-color: #f2f2f2;
+}
+.details-content {
+    padding: 0 1.5rem 1.5rem;
+}
+
+/* 公式容器 */
+.formula-container {
+    padding: 1.5rem;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+}

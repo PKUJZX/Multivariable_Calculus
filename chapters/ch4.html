@@ -1,0 +1,213 @@
+<!-- ch4.html -->
+<!-- 第四部分：伟大的综合——向量微积分基本定理 -->
+
+<h1>第四部分：伟大的综合——向量微积分基本定理</h1>
+<p>
+    这是多元微积分的顶峰。在这一部分，我们将看到之前所学的所有概念——微分算子（梯度、散度、旋度）与积分（线积分、面积分、体积分）——如何通过一系列宏伟的定理被完美地联系在一起。这些定理共同揭示了一个深刻而统一的核心原则：一个区域内部的微观变化累积起来，完全由该区域边界上的宏观表现所决定。
+</p>
+
+<hr>
+
+<h2>4.1 统一的语言：梯度、散度和旋度</h2>
+<p>
+    现在，我们正式引入向量微积分的三个核心微分算子。它们都可以通过一个形式化的向量算子——<strong>Nabla算子</strong> $\nabla = \langle \frac{\partial}{\partial x}, \frac{\partial}{\partial y}, \frac{\partial}{\partial z} \rangle$ 来简洁地表达。
+</p>
+
+<div class="definition-box">
+    <h3>三大核心微分算子</h3>
+    <ul>
+        <li>
+            <strong>梯度 (Gradient, $\nabla f$)：</strong>作用于一个标量场 $f$，产生一个向量场。该向量场指向原标量场增长最快的方向。
+        </li>
+        <li>
+            <strong>散度 (Divergence, $\nabla \cdot \mathbf{F}$)：</strong>$\nabla$ 与一个向量场 $\mathbf{F}$ 的“点积”，产生一个标量场。它度量了向量场在某一点的“源”或“汇”的强度。正散度表示源，负散度表示汇。
+        </li>
+        <li>
+            <strong>旋度 (Curl, $\nabla \times \mathbf{F}$)：</strong>$\nabla$ 与一个向量场 $\mathbf{F}$ 的“叉积”，产生另一个向量场。它度量了向量场在某一点的局部旋转或“漩涡”的强度。旋度向量的方向是旋转轴，大小表示旋转快慢。
+        </li>
+    </ul>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 实例分析：计算散度和旋度</h3>
+    <p>考虑一个三维向量场 $\mathbf{F}(x,y,z) = \langle xy, yz, -y^2 \rangle$。</p>
+    <p><strong>计算散度 $\nabla \cdot \mathbf{F}$：</strong>
+    $\nabla \cdot \mathbf{F} = y+z$。这是一个标量场。</p>
+    <p><strong>计算旋度 $\nabla \times \mathbf{F}$：</strong>
+    $\nabla \times \mathbf{F} = \langle -3y, 0, -x \rangle$。这是一个新的向量场。</p>
+</div>
+
+<hr>
+
+<h2>4.2 微积分基本定理的回顾：核心原则</h2>
+<p>
+    一元微积分基本定理 $\int_a^b f'(x)dx = f(b) - f(a)$ 揭示了一个深刻的原理：一个函数的导数在某个区域（区间）上的积分，等于该函数本身在该区域边界（端点）上的取值之差。
+</p>
+<p>
+    向量微积分中所有重要的定理，都是这一核心思想在更高维度上的体现。它们共同阐述了同一个宏伟的原则：<strong>某个微分算子作用于一个场，其结果在一个区域上的积分，等于这个场本身在该区域边界上的积分。</strong>
+</p>
+
+<hr>
+
+<h2>4.3 四大定理</h2>
+<p>
+    这四个定理构成了经典向量微积分的顶峰，它们将前述的微分算子与积分完美地联系在一起。
+</p>
+
+<div class="theorem-box">
+    <h3>梯度定理 (线积分基本定理)</h3>
+    <div class="formula-container">
+        $\int_C \nabla f \cdot d\mathbf{r} = f(Q) - f(P)$
+    </div>
+    <p><strong>释义：</strong>一个导数（梯度 $\nabla f$）在一个区域（曲线 C）上的积分，等于原函数 $f$ 在其边界（起点 P 和终点 Q）上的值之差。这解释了为什么保守场（梯度场）的线积分与路径无关。</p>
+</div>
+
+<div class="theorem-box">
+    <h3>格林定理 (二维)</h3>
+    <div class="formula-container">
+        $\oint_{\partial D} Pdx + Qdy = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dA$
+    </div>
+    <p><strong>释义：</strong>一个场（向量场 $\mathbf{F}=\langle P,Q \rangle$）在其边界（闭合曲线 $\partial D$）上的积分（环量），等于其导数（二维旋度）在一个区域（平面区域 D）上的积分。区域内部所有微小漩涡的旋转效应在内部相互抵消，最终只剩下边界上的宏观环流。</p>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 实例分析：验证格林定理</h3>
+    <div class="two-column-layout">
+        <div>
+            <p>考虑向量场 $\mathbf{F} = \langle -y, x \rangle$ 和区域 $D$ 为单位圆。我们已计算出边界上的环量（线积分）和区域内的旋度积分都等于 $2\pi$。</p>
+            <p><strong>几何直觉：</strong>右侧的可视化展示了这一点。场 $\mathbf{F}$ 在区域 $D$ 内处处产生逆时针的微小旋转（小漩涡）。在区域内部，相邻的漩涡效应相互抵消，但在边界 $\partial D$ 上，这种旋转效应累加起来，形成了一个宏观的逆时针环流。格林定理精确地量化了这种关系。</p>
+        </div>
+        <div>
+            <!-- 新增：格林定理的可视化 Canvas -->
+            <canvas id="greenTheoremCanvas" width="400" height="400" style="border:1px solid #ccc; border-radius: 8px;"></canvas>
+            <p style="text-align:center; font-size: 0.9em; color: #555;">内部旋度的累积 = 边界的环流</p>
+        </div>
+    </div>
+</div>
+
+<div class="theorem-box">
+    <h3>斯托克斯定理 (三维)</h3>
+    <div class="formula-container">
+        $\oint_{\partial S} \mathbf{F} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S}$
+    </div>
+    <p><strong>释义：</strong>一个场 $\mathbf{F}$ 在其边界（闭合曲线 $\partial S$）上的积分（环量），等于其导数（旋度 $\nabla \times \mathbf{F}$）在一个区域（曲面 S）上的积分（通量）。这是格林定理向三维空间的直接推广。</p>
+</div>
+
+<div class="theorem-box">
+    <h3>散度定理 (高斯定理)</h3>
+    <div class="formula-container">
+        $\iint_{\partial V} \mathbf{F} \cdot d\mathbf{S} = \iiint_V (\nabla \cdot \mathbf{F}) dV$
+    </div>
+    <p><strong>释义：</strong>一个场 $\mathbf{F}$ 在其边界（封闭曲面 $\partial V$）上的积分（通量），等于其导数（散度 $\nabla \cdot \mathbf{F}$）在一个区域（体积 V）上的积分。一个体积内部所有“源”和“汇”的总和，等于从该体积的边界表面净流出的总通量。</p>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 实例分析：验证散度定理</h3>
+    <div class="two-column-layout">
+        <div>
+            <p>考虑向量场 $\mathbf{F} = \langle x, y, z \rangle$ 和区域 $V$ 为单位球。我们已计算出边界上的通量（面积分）和区域内的散度积分都等于 $4\pi$。</p>
+            <p><strong>几何直觉：</strong>右侧的可视化展示了其二维模拟。场 $\mathbf{F}$ 在区域 $V$ 内处处向外发散（散度为正）。这代表区域内充满了无数微小的“源”。所有这些源产生的总流量，必然等于最终穿过边界 $\partial V$ 的净流量。散度定理就是这一物质守恒定律的数学表达。</p>
+        </div>
+        <div>
+            <!-- 新增：散度定理的可视化 Canvas -->
+            <canvas id="divergenceTheoremCanvas" width="400" height="400" style="border:1px solid #ccc; border-radius: 8px;"></canvas>
+            <p style="text-align:center; font-size: 0.9em; color: #555;">内部源的累积 = 边界的总通量</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- 总结表格 -->
+<div class="content-container" style="padding: 2rem 0;">
+    <h3 style="text-align: center;">定理的平行结构</h3>
+    <table style="width:100%; border-collapse: collapse;">
+        <thead style="background-color:#f2f2f2;">
+            <tr>
+                <th style="border: 1px solid #ddd; padding: 8px;">定理</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">维度</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">“导数”算子</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">区域 (n维)</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">边界 (n-1维)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">微积分基本定理</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">1D</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">$d/dx$</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">区间 $[a,b]$</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">端点 $\{a,b\}$</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">梯度定理</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">2D/3D</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">$\nabla f$ (梯度)</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">曲线 C</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">端点 $\{P,Q\}$</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">格林定理</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">2D</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">$(\text{curl } \mathbf{F}) \cdot \mathbf{k}$</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">平面区域 D</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">闭合曲线 $\partial D$</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">斯托克斯定理</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">3D</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">$\nabla \times \mathbf{F}$ (旋度)</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">曲面 S</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">闭合曲线 $\partial S$</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">散度定理</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">3D</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">$\nabla \cdot \mathbf{F}$ (散度)</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">体积 V</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">封闭曲面 $\partial V$</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr>
+
+<h2>4.4 终极统一：广义斯托克斯定理</h2>
+<p>
+    通过观察上面的总结表格，你一定会注意到一种惊人的模式：所有定理都遵循着“<strong>某个东西在边界上的积分 = 另一个东西在区域内部的积分</strong>”这一结构。这并非巧合。在更现代、更强大的数学语言——<strong>微分形式</strong> (Differential Forms) 中，所有这些定理都可以被一个单一、优美的公式所统一。
+</p>
+
+<div class="theorem-box">
+    <h3>广义斯托克斯定理 (Generalized Stokes' Theorem)</h3>
+    <div class="formula-container">
+        $\int_{\partial M} \omega = \int_M d\omega$
+    </div>
+    <p>
+        这个公式可能看起来很抽象，但它的思想与我们之前看到的所有定理完全一致。让我们来解读它的组成部分：
+    </p>
+    <ul>
+        <li><strong>$M$ (流形 Manifold):</strong> 这是我们积分的“区域”，它可以是任意维度。它可以是一条曲线 (1维流形)，一个曲面 (2维流形)，或者一个体 (3维流形)。</li>
+        <li><strong>$\partial M$ (边界 Boundary):</strong> 这是区域 $M$ 的“边界”。曲线的边界是其端点；曲面的边界是环绕它的闭合曲线；体的边界是包裹它的封闭曲面。</li>
+        <li><strong>$\omega$ (微分形式 Differential Form):</strong> 这是一种可以被积分的对象，是函数和向量场的推广。0-形式是标量场，1-形式对应于线积分中的向量场，2-形式对应于面积分中的向量场。</li>
+        <li><strong>$d\omega$ (外微分 Exterior Derivative):</strong> 这是作用在微分形式上的“通用导数”。它是一个统一的算子，根据作用对象的不同，其表现形式就是我们熟悉的梯度、旋度或散度。</li>
+    </ul>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 统一的视角：所有定理都是一个定理</h3>
+    <p>广义斯托克斯定理的威力在于，通过选择不同维度的流形 $M$ 和不同阶的微分形式 $\omega$，我们可以“推导”出之前学过的所有定理：</p>
+    <ul>
+        <li>
+            <strong>梯度定理：</strong>令 $\omega$ 是一个0-形式 (一个标量函数 $f$)，$M$ 是一条曲线。那么 $d\omega$ 就对应于梯度 $\nabla f$，而 $\int_{\partial M} \omega$ 就是函数在曲线端点的值之差 $f(Q)-f(P)$。公式变为梯度定理。
+        </li>
+        <li>
+            <strong>斯托克斯定理：</strong>令 $\omega$ 是一个1-形式 (对应于向量场 $\mathbf{F}$)，$M$ 是一个曲面。那么 $d\omega$ 就对应于旋度 $\nabla \times \mathbf{F}$，而 $\int_{\partial M} \omega$ 就是场在边界曲线上的环量。公式变为经典斯托克斯定理。
+        </li>
+        <li>
+            <strong>散度定理：</strong>令 $\omega$ 是一个2-形式 (对应于向量场 $\mathbf{F}$)，$M$ 是一个三维体。那么 $d\omega$ 就对应于散度 $\nabla \cdot \mathbf{F}$，而 $\int_{\partial M} \omega$ 就是场在边界曲面上的通量。公式变为散度定理。
+        </li>
+    </ul>
+    <p>
+        因此，梯度、旋度和散度并非三个孤立的概念，它们本质上都是同一个基本运算——<strong>外微分</strong>——在不同维度下的具体体现。广义斯托克斯定理深刻地揭示了，在任意维度空间中，微分与积分都遵循着同一个根本法则：<strong>一个区域内部所有微观变化的累积，等于该区域边界上的净效应。</strong> 这正是整个向量微积分学的精髓所在。
+    </p>
+</div>

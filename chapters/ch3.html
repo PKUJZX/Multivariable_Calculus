@@ -1,0 +1,269 @@
+<!-- ch3.html -->
+<!-- 第三部分：区域上的累积——多维空间中的积分 -->
+
+<h1>第三部分：区域上的累积——多维空间中的积分</h1>
+<p>
+    积分的本质是“累积”。在多维空间中，这一概念从计算曲线下的面积，扩展到计算曲面下的体积，乃至更高维度的“超体积”。本部分将探讨如何在不同坐标系下进行这种累积，并进一步研究曲线和曲面与其所处外部场之间的相互作用。
+</p>
+
+<hr>
+
+<h2>3.1 从面积到体积，再到更高维度：重积分</h2>
+<p>
+    <strong>直观的飞跃：</strong>正如单元定积分 $\int f(x)dx$ 通过累加无数个无限窄的矩形面积来计算曲线下的总面积，<strong>二重积分</strong> (Double Integral) $\iint_D f(x,y)dA$ 则是通过累加无数根无限细的立柱的体积，来计算曲面 $z=f(x,y)$ 下方的总体积。
+</p>
+<p>
+    <strong>微元的变化：</strong>一维的线元 $dx$ 被二维的面积元 $dA=dxdy$ 或三维的体积元 $dV=dxdydz$ 所取代。
+</p>
+
+<div class="definition-box">
+    <h3>计算方法与物理意义</h3>
+    <ul>
+        <li>
+            <strong>计算方法 (累次积分)：</strong>在实践中，我们通过<strong>累次积分</strong> (Iterated Integrals) 来计算重积分，即将其视为一系列嵌套的单元积分。这种方法的合理性由<strong>富比尼定理</strong> (Fubini's Theorem) 保证，该定理指出，对于性质良好的函数，积分的次序可以交换。
+        </li>
+        <li>
+            <strong>物理意义：</strong>如果被积函数 $f$ 代表的不是高度，而是一种密度分布（例如单位面积的质量 $\rho(x,y)$），那么重积分计算的就是一个总的物理量，如总质量 $M=\iint_D \rho(x,y)dA$。当被积函数为常数1时，二重积分的结果就是定义域的面积，三重积分的结果就是定义域的体积。
+        </li>
+    </ul>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 实例分析：计算二重积分</h3>
+    <p>计算函数 $f(x,y) = 8 - x^2 - y^2$ 在矩形区域 $R: 0 \le x \le 1, 0 \le y \le 2$ 上的二重积分（即曲面下方的体积）。</p>
+    <div class="formula-container">
+        $V = \iint_R (8 - x^2 - y^2) dA = \int_0^2 \int_0^1 (8 - x^2 - y^2) dx dy = \frac{38}{3}$
+    </div>
+    <p>这个计算过程是将一个大的体积（曲面下方的立柱）拆解成无数个细长的“立柱”，先沿着 x 方向累加成一个“薄片”，再将所有薄片沿着 y 方向累加起来，得到总体积。</p>
+</div>
+
+<!-- 新增内容：一般区域上的积分 -->
+<div class="highlight-box">
+    <h3>在一般区域上的二重积分</h3>
+    <p>
+        多数情况下，我们的积分区域D并非矩形。此时，我们需要根据区域的形状决定积分的次序。
+    </p>
+    <ul>
+        <li>
+            <strong>I 型区域 (上下界是函数):</strong> 如果区域 D 可以被描述为 $a \le x \le b, g_1(x) \le y \le g_2(x)$，那么积分次序应为：
+            <div class="formula-container">
+                $\iint_D f(x,y)dA = \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y) dy dx$
+            </div>
+             我们称之为“先y后x”，可以想象成用垂直的细条去填充区域。
+        </li>
+        <li>
+            <strong>II 型区域 (左右界是函数):</strong> 如果区域 D 可以被描述为 $c \le y \le d, h_1(y) \le x \le h_2(y)$，那么积分次序应为：
+            <div class="formula-container">
+                $\iint_D f(x,y)dA = \int_c^d \int_{h_1(y)}^{h_2(y)} f(x,y) dx dy$
+            </div>
+            我们称之为“先x后y”，可以想象成用水平的细条去填充区域。
+        </li>
+    </ul>
+    <p><strong>💡 实例：</strong>计算由抛物线 $y=2x^2$ 和 $y=1+x^2$ 所围成区域 D 的面积。</p>
+    <p>首先，解方程 $2x^2=1+x^2$ 得到交点为 $x=\pm 1$。该区域是I型区域，其中 $-1 \le x \le 1, 2x^2 \le y \le 1+x^2$。面积即为对函数 $f(x,y)=1$ 进行积分。</p>
+    <div class="formula-container">
+       $A = \iint_D 1 dA = \int_{-1}^{1} \int_{2x^2}^{1+x^2} dy dx = \int_{-1}^{1} (1+x^2-2x^2) dx = \int_{-1}^{1} (1-x^2) dx = \frac{4}{3}$
+    </div>
+</div>
+
+<hr>
+
+<h2>3.2 选择合适的坐标系：变量替换</h2>
+<p>
+    <strong>动机：</strong>在笛卡尔坐标系（直角坐标系）下计算圆形、圆柱形或球形区域上的积分，往往会导致极其复杂的积分限。因此，我们需要转换到能够匹配问题几何对称性的坐标系中去。
+</p>
+
+<div class="highlight-box">
+    <h3>雅可比行列式：变换的代价</h3>
+    <div class="two-column-layout">
+        <div>
+            <p>
+                当我们进行坐标变换时，实际上是在扭曲原来的坐标网格。一个坐标系中的微小矩形，在另一个坐标系中会变成一个被拉伸或压缩的曲边图形。<strong>雅可比行列式</strong> (Jacobian Determinant) 的绝对值 $|J|$，正是描述这种微元面积或体积变化的局部缩放因子。
+            </p>
+            <div class="formula-container">
+                $dA = dxdy = |J| drd\theta = r dr d\theta$
+            </div>
+            <p>
+                右侧的可视化清晰地展示了这一点。在 $(r, \theta)$ 坐标系中一个普通的微小矩形（面积为 $dr d\theta$），映射到 $(x, y)$ 坐标系后，变成了一个曲边图形。这个新图形的面积近似为 $r dr d\theta$。离原点越远（r越大），这个矩形被拉伸得越厉害，面积缩放因子 $r$ 就越大。
+            </p>
+        </div>
+        <div>
+            <!-- 新增：坐标变换的可视化 Canvas -->
+            <canvas id="changeOfVariablesCanvas" width="400" height="400" style="border:1px solid #ccc; border-radius: 8px;"></canvas>
+            <p style="text-align:center; font-size: 0.9em; color: #555;">从极坐标到直角坐标的面积微元变换</p>
+        </div>
+    </div>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 实例分析：使用极坐标积分</h3>
+    <p>计算高斯函数 $f(x,y) = e^{-(x^2+y^2)}$ 在整个二维平面上的积分 $I = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} e^{-(x^2+y^2)} dx dy$。</p>
+    <p>在直角坐标系下，这个积分非常困难。但我们注意到被积函数和积分区域都具有圆形对称性。我们转换到极坐标。</p>
+    <p><strong>第一步：转换函数和微元。</strong>
+    $x^2+y^2 = r^2$，并且 $dxdy = r dr d\theta$。</p>
+    <p><strong>第二步：转换积分限。</strong>
+    整个二维平面对应于 $0 \le r < \infty$ 和 $0 \le \theta \le 2\pi$。</p>
+    <p><strong>第三步：计算积分。</strong></p>
+    <div class="formula-container">
+        $I = \int_0^{2\pi} \int_0^{\infty} e^{-r^2} \cdot r dr d\theta = \pi$
+    </div>
+    <p>通过切换到极坐标，我们轻松地解决了一个在直角坐标系下极其困难的积分。这个结果在概率论和统计学中非常重要。</p>
+</div>
+
+<!-- 新增内容：柱坐标与球坐标 -->
+<div class="highlight-box">
+    <h3>三维空间中的柱坐标与球坐标</h3>
+    <p>
+        正如极坐标能简化圆形区域的二维积分，柱坐标和球坐标是处理三维圆柱体、圆锥体和球体区域积分的利器。
+    </p>
+    <div class="two-column-layout">
+        <div>
+            <h4>柱坐标 (Cylindrical Coordinates)</h4>
+            <p>
+                这本质上是极坐标在三维的直接延伸。点 $(x, y, z)$ 被表示为 $(r, \theta, z)$。
+            </p>
+            <ul>
+                <li><strong>变换关系:</strong> $x=r\cos\theta, y=r\sin\theta, z=z$</li>
+                <li><strong>体积元 (Jacobian):</strong> $dV = r dz dr d\theta$</li>
+            </ul>
+             <p><strong>适用场景：</strong>积分区域的 xy 投影是圆形，且在 z 方向有一定高度，如圆柱体、圆锥、旋转抛物面等。</p>
+        </div>
+        <div>
+            <h4>球坐标 (Spherical Coordinates)</h4>
+            <p>
+                点 $(x, y, z)$ 被表示为 $(\rho, \theta, \phi)$，其中 $\rho$ 是到原点的距离，$\phi$ 是与正z轴的夹角，$\theta$ 与柱坐标相同。
+            </p>
+            <ul>
+                <li><strong>变换关系:</strong> $x=\rho\sin\phi\cos\theta, y=\rho\sin\phi\sin\theta, z=\rho\cos\phi$</li>
+                <li><strong>体积元 (Jacobian):</strong> $dV = \rho^2 \sin\phi d\rho d\phi d\theta$</li>
+            </ul>
+             <p><strong>适用场景：</strong>积分区域具有球对称性，如球体、球壳、或由过原点的锥面切割出的部分球体。</p>
+        </div>
+    </div>
+     <p><strong>💡 实例：</strong>计算半径为 R 的均匀球体的转动惯量（绕z轴）。</p>
+     <p>设密度为常数 $\delta$。转动惯量 $I_z = \iiint_V (x^2+y^2)\delta dV$。这个积分在球坐标下变得非常简单：$x^2+y^2 = (\rho\sin\phi)^2$, $dV = \rho^2 \sin\phi d\rho d\phi d\theta$。</p>
+    <div class="formula-container">
+        $I_z = \delta \int_0^{2\pi} \int_0^{\pi} \int_0^R (\rho^2\sin^2\phi) \cdot (\rho^2 \sin\phi) d\rho d\phi d\theta = \frac{2}{5} (\frac{4}{3}\pi R^3 \delta) R^2 = \frac{2}{5}MR^2$
+    </div>
+</div>
+
+<hr>
+
+<h2>3.3 沿路径与曲面积分：与场的相互作用</h2>
+<p>
+    这一节标志着一个重要的概念转变：我们不再仅仅对一个函数在其自身定义域上进行积分，而是开始研究一个几何对象（曲线或曲面）与其所处的外部向量场之间的相互作用。
+</p>
+
+<div class="two-column-layout">
+    <div>
+        <h3>线积分 (Line Integrals)</h3>
+        <ul>
+            <li>
+                <strong>第一类 (标量场) $\int_C f ds$：</strong><br>
+                累加一个标量函数 $f$ 沿曲线 $C$ 的值。可以想象成计算一根密度不均匀的铁丝的总质量。其中 $ds$ 是无限小的弧长微元。
+            </li>
+            <li>
+                <strong>第二类 (向量场) $\int_C \mathbf{F} \cdot d\mathbf{r}$：</strong><br>
+                累加向量场 $\mathbf{F}$ 沿着曲线 $C$ 的切向分量。其最核心的物理意义是计算一个力场 $\mathbf{F}$ 对一个沿着路径 $C$ 运动的质点所做的<strong>功</strong>。
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h3>面积分 (Surface Integrals)</h3>
+        <ul>
+            <li>
+                <strong>第一类 (标量场) $\iint_S f dS$：</strong><br>
+                累加一个标量函数 $f$ 在曲面 $S$ 上的值。可以想象成计算一个密度不均匀的曲面薄片（如蛋壳）的总质量。其中 $dS$ 是无限小的面积微元。
+            </li>
+            <li>
+                <strong>第二类 (向量场) $\iint_S \mathbf{F} \cdot d\mathbf{S}$：</strong><br>
+                累加向量场 $\mathbf{F}$ 穿过曲面 $S$ 的法向（垂直）分量。其最核心的物理意义是计算<strong>通量</strong> (Flux)，即流体（由向量场 $\mathbf{F}$ 代表）穿过曲面 $S$ 的速率。
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 实例分析：计算线积分（功）</h3>
+    <div class="two-column-layout">
+        <div>
+            <p>计算旋转场 $\mathbf{F} = \langle -y, x \rangle$ 沿着逆时针方向的单位圆 $C$ 运动一周所做的功 $W = \oint_C \mathbf{F} \cdot d\mathbf{r}$。</p>
+            <p><strong>第一步：参数化路径 C。</strong>
+            $\mathbf{r}(t) = \langle \cos(t), \sin(t) \rangle$。</p>
+            <p><strong>第二步：计算 $d\mathbf{r}$。</strong>
+            $d\mathbf{r} = \langle -\sin(t), \cos(t) \rangle dt$。</p>
+            <p><strong>第三步：计算点积并积分。</strong></p>
+            <div class="formula-container">
+                $W = \int_0^{2\pi} (\sin^2(t) + \cos^2(t)) dt = 2\pi$
+            </div>
+            <p>右侧的可视化展示了力场（蓝色箭头）和路径切向（红色箭头）在每一点都完美对齐。这意味着力场一直在对物体做正功，所以最终结果是一个正值。</p>
+        </div>
+        <div>
+            <!-- 新增：线积分的可视化 Canvas -->
+            <canvas id="lineIntegralCanvas" width="400" height="400" style="border:1px solid #ccc; border-radius: 8px;"></canvas>
+            <p style="text-align:center; font-size: 0.9em; color: #555;">线积分：累加力场沿路径的切向分量</p>
+        </div>
+    </div>
+</div>
+
+<!-- 新增内容：面积分实例 -->
+<div class="highlight-box">
+    <h3>💡 实例分析：计算面积分（通量）</h3>
+    <p>计算向量场 $\mathbf{F} = \langle 0, 0, z \rangle$ 穿过抛物面 $S: z = x^2 + y^2$ (其中 $0 \le z \le 1$) 向上的通量。</p>
+    <p><strong>第一步：参数化曲面 S。</strong></p>
+    <p>由于曲面由 $z=g(x,y)=x^2+y^2$ 给出，我们可以直接使用 x 和 y 作为参数：
+    $\mathbf{r}(x, y) = \langle x, y, x^2+y^2 \rangle$。
+    该曲面在 xy 平面上的投影 D 是一个单位圆 $x^2+y^2 \le 1$。</p>
+
+    <p><strong>第二步：计算法向量 $d\mathbf{S}$。</strong></p>
+    <p>对于 $z=g(x,y)$ 形式的曲面，向上的法向量为 $d\mathbf{S} = \langle -\frac{\partial g}{\partial x}, -\frac{\partial g}{\partial y}, 1 \rangle dA$。
+    $\frac{\partial g}{\partial x} = 2x$, $\frac{\partial g}{\partial y} = 2y$。
+    所以，$d\mathbf{S} = \langle -2x, -2y, 1 \rangle dA$。</p>
+
+    <p><strong>第三步：计算点积 $\mathbf{F} \cdot d\mathbf{S}$。</strong></p>
+    <p>在曲面上，$\mathbf{F} = \langle 0, 0, z \rangle = \langle 0, 0, x^2+y^2 \rangle$。
+    $\mathbf{F} \cdot d\mathbf{S} = \langle 0, 0, x^2+y^2 \rangle \cdot \langle -2x, -2y, 1 \rangle dA = (x^2+y^2) dA$。</p>
+
+    <p><strong>第四步：计算二重积分。</strong></p>
+    <p>通量 $\Phi = \iint_S \mathbf{F} \cdot d\mathbf{S} = \iint_D (x^2+y^2) dA$。
+    由于积分区域 D 是单位圆，切换到极坐标是最佳选择：$x^2+y^2=r^2, dA=rdrd\theta$。</p>
+    <div class="formula-container">
+        $\Phi = \int_0^{2\pi} \int_0^1 (r^2) \cdot r dr d\theta = \int_0^{2\pi} \left[ \frac{r^4}{4} \right]_0^1 d\theta = \int_0^{2\pi} \frac{1}{4} d\theta = \frac{\pi}{2}$
+    </div>
+    <p><strong>物理直觉：</strong>向量场 $\mathbf{F} = \langle 0, 0, z \rangle$ 只在 z 方向有分量，且大小随高度 z 增加而增加。因此，流体总是垂直向上流动，且越往上流速越快。我们计算的是穿过这个碗状曲面的总流量，结果为正值是符合直觉的。</p>
+</div>
+
+
+<!-- 新增章节：保守场 -->
+<hr>
+<h2>3.4 深入探索：保守场与路径无关性</h2>
+<p>
+    在计算第二类线积分（功）时，一个深刻的问题浮出水面：所做的功是否与质点运动的具体路径有关？答案是，这取决于力场的性质。
+</p>
+
+<div class="definition-box">
+    <h3>保守向量场</h3>
+    <p>一个向量场 $\mathbf{F}$ 如果是某个标量函数 $f$ 的梯度，即 $\mathbf{F} = \nabla f$，那么我们称 $\mathbf{F}$ 为<strong>保守向量场</strong>，并称 $f$ 为其<strong>势函数</strong>。</p>
+    <ul>
+        <li>
+            <strong>路径无关性：</strong>在保守场中，线积分 $\int_C \mathbf{F} \cdot d\mathbf{r}$ 的值仅仅取决于曲线 C 的起点 P 和终点 Q，而与 C 的具体形状无关。这被称为<strong>线积分的路径无关性</strong>。
+        </li>
+        <li>
+            <strong>基本定理：</strong>根据下一章将要学习的梯度定理，这个积分可以直接通过势函数计算：$\int_C \nabla f \cdot d\mathbf{r} = f(Q) - f(P)$。
+        </li>
+        <li>
+            <strong>闭路积分为零：</strong>一个直接的推论是，在保守场中，沿任何闭合路径的线积分（环量）都恒为零：$\oint_C \mathbf{F} \cdot d\mathbf{r} = 0$。
+        </li>
+    </ul>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 如何判断一个场是否保守？</h3>
+    <p>对于一个定义在<strong>单连通区域</strong>（即区域中没有任何“洞”）上的向量场 $\mathbf{F}$，我们可以通过计算它的旋度来判断其是否保守。</p>
+    <div class="formula-container">
+      若 $\nabla \times \mathbf{F} = \mathbf{0}$，则 $\mathbf{F}$ 是保守场。
+    </div>
+    <p>
+        <strong>物理直觉：</strong>旋度衡量场的局部旋转程度。一个无旋的场意味着它内部没有“漩涡”，因此你无论沿着怎样的闭合路径走一圈，场对你做的功都会相互抵消，净功为零。这为我们下一章学习格林定理和斯托克斯定理提供了重要的铺垫，这两个定理精确地描述了边界上的环流（线积分）与内部的旋度（二重/三重积分）之间的关系。
+    </p>
+</div>

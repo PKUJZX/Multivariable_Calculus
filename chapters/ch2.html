@@ -1,0 +1,169 @@
+<!-- ch2.html -->
+<!-- 第二部分：变化的多重面孔——多维空间中的微分 -->
+
+<h1>第二部分：变化的多重面孔——多维空间中的微分</h1>
+<p>
+    在理解了多元函数的基本形态后，我们进入了多元微积分的核心——微分。这里的挑战在于，一个点可以有无穷多个变化方向。本部分将系统地介绍我们如何从最简单的“切片”视角出发，逐步构建起一套能够完整描述高维空间局部变化的强大工具。
+</p>
+
+<hr>
+
+<h2>2.1 切割曲面：偏导数</h2>
+<p>
+    面对无穷多个变化方向的复杂性，最朴素的想法是将其简化。<strong>偏导数</strong> (Partial Derivative) 正是基于这种思想，它衡量函数在保持其他所有变量不变的情况下，仅对某一个自变量的变化率。例如，对于函数 $f(x,y)$，其关于 x 的偏导数记作 $\frac{\partial f}{\partial x}$ 或 $f_x$。
+</p>
+
+<div class="definition-box">
+    <h3>偏导数的几何与物理意义</h3>
+    <ul>
+        <li>
+            <strong>几何解释：</strong>对于曲面 $z=f(x,y)$，在点 $(x_0, y_0)$ 处的偏导数 $\frac{\partial f}{\partial x}$，几何上代表了曲面与垂直平面 $y=y_0$ 相交所形成的曲线在该点的切线斜率。简而言之，它是在“x方向”上的斜率。同理，$\frac{\partial f}{\partial y}$ 是在“y方向”上的斜率。
+        </li>
+        <li>
+            <strong>物理意义：</strong>偏导数衡量了输出量对单一输入量变化的敏感度。在理想气体状态方程 $PV=nRT$ 中，$\frac{\partial P}{\partial T}$ 表示在体积恒定条件下，压强随温度的变化率。在经济学中，偏导数代表边际量，如边际利润或边际成本。
+        </li>
+    </ul>
+</div>
+
+<!-- 实例分析与可视化 (已修改) -->
+<div class="highlight-box">
+    <h3>💡 实例分析：计算并观察偏导数</h3>
+    <div class="two-column-layout">
+        <div>
+            <p>考虑一个碗状函数 $f(x, y) = x^2 + 0.25y^2$。我们来计算它在点 $P(1, 2)$ 的偏导数。</p>
+            <p><strong>计算 $\frac{\partial f}{\partial x}$：</strong></p>
+            <p>我们将 $y$ 视为常数，对 $x$ 求导：</p>
+            <div class="formula-container">
+                $\frac{\partial f}{\partial x} = 2x$
+            </div>
+            <p>在点 $P(1, 2)$，该值为 $\frac{\partial f}{\partial x}(1,2) = 2(1) = 2$。</p>
+            <p><strong>计算 $\frac{\partial f}{\partial y}$：</strong></p>
+            <p>我们将 $x$ 视为常数，对 $y$ 求导：</p>
+            <div class="formula-container">
+                $\frac{\partial f}{\partial y} = 0.5y$
+            </div>
+            <p>在点 $P(1, 2)$，该值为 $\frac{\partial f}{\partial y}(1,2) = 0.5(2) = 1$。</p>
+            <p>在右侧的可视化中，等高线是椭圆。在点 P，沿 x 方向（红色箭头）移动时，函数值变化更快（更快地穿越密集的等高线），因此 $\frac{\partial f}{\partial x}$ 的值更大。而沿 y 方向（蓝色箭头）移动时，函数值变化较缓（等高线相对稀疏），因此 $\frac{\partial f}{\partial y}$ 的值更小。</p>
+        </div>
+        <div>
+            <!-- 偏导数的可视化 Canvas -->
+            <canvas id="partialDerivativeCanvas" width="400" height="400" style="border:1px solid #ccc; border-radius: 8px;"></canvas>
+            <p style="text-align:center; font-size: 0.9em; color: #555;">偏导数与等高线的关系</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h2>2.2 驾驭地形：梯度与方向导数</h2>
+<p>
+    仅仅考虑坐标轴方向的变化是远远不够的。为了描述任意方向上的变化，我们引入了<strong>方向导数</strong> (Directional Derivative)。方向导数 $D_{\mathbf{u}}f$ 将偏导数的概念推广，用于计算函数沿着由单位向量 $\mathbf{u}$ 指定的任意方向上的变化率。
+</p>
+<p>
+    然而，为每一个方向都计算一个导数既不经济也不优雅。数学家们发现，可以将所有方向的变化信息整合到一个单一的向量中，这就是<strong>梯度</strong> (Gradient)。函数 $f$ 的梯度是一个由其所有偏导数构成的向量，记作 $\nabla f$ 或 $\text{grad } f$：
+</p>
+<div class="formula-container">
+    $\nabla f = \left\langle \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z} \right\rangle$
+</div>
+<p>梯度向量蕴含了关于函数局部变化的全部核心信息，体现在其三个深刻的性质上：</p>
+
+<div class="highlight-box">
+    <h3>梯度的三大核心性质</h3>
+    <ol>
+        <li><strong>最速上升方向：</strong>在某一点，梯度向量 $\nabla f$ 指向函数 $f$ 值增长最快的方向。相应地，负梯度 $-\nabla f$ 指向函数值下降最快的方向。这正是机器学习中<strong>梯度下降算法</strong>的理论基石。</li>
+        <li><strong>最速变化率：</strong>梯度向量的模（长度）$|\nabla f|$，等于该点在最速上升方向上的变化率，即最大的方向导数值。</li>
+        <li><strong>与等值集正交：</strong>在任意一点，梯度向量 $\nabla f$ 总是与穿过该点的等高线（或等值面）相垂直（正交）。这解释了为什么水流总是垂直于等高线向下流动——水流的方向正是地形高度的负梯度方向。</li>
+    </ol>
+    <p>借助梯度，方向导数的计算变得异常简洁：$D_{\mathbf{u}}f = \nabla f \cdot \mathbf{u}$。这个公式表明，任意方向的斜率，不过是梯度这个“总变化向量”在该方向上的投影。</p>
+</div>
+
+<!-- 实例分析与可视化 (已修改) -->
+<div class="highlight-box">
+    <h3>💡 实例分析：梯度与方向导数的几何关系</h3>
+    <div class="two-column-layout">
+        <div>
+            <p>考虑函数 $f(x, y) = x^2 + y^2$。我们想知道在点 $P(-2, -1)$，沿向量 $\mathbf{v} = \langle 1, -1 \rangle$ 方向的变化率是多少。</p>
+            <p><strong>第一步：计算梯度。</strong></p>
+            <p>$\nabla f(-2, -1) = \langle 2(-2), 2(-1) \rangle = \langle -4, -2 \rangle$。这个向量（右图中粗大的绿色箭头）指向了函数增长最快的方向，并与该点的等高线垂直。</p>
+            <p><strong>第二步：单位化方向向量。</strong></p>
+            <p>单位向量是 $\mathbf{u} = \left\langle \frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}} \right\rangle$ (右图中蓝色箭头)。</p>
+            <p><strong>第三步：计算方向导数。</strong></p>
+            <div class="formula-container">
+                $D_{\mathbf{u}}f(-2, -1) = \nabla f \cdot \mathbf{u} = \langle -4, -2 \rangle \cdot \left\langle \frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}} \right\rangle = -\frac{4}{\sqrt{2}} + \frac{2}{\sqrt{2}} = -\sqrt{2} \approx -1.414$
+            </div>
+            <p>这个负值表示函数在 $\mathbf{u}$ 方向上是减少的。其绝对值在几何上等于梯度向量 $\nabla f$ 在方向向量 $\mathbf{u}$ 上的投影长度（右图中红色线段的长度）。</p>
+        </div>
+        <div>
+            <!-- 梯度和方向导数的可视化 Canvas -->
+            <canvas id="gradientDirectionalCanvas" width="400" height="400" style="border:1px solid #ccc; border-radius: 8px;"></canvas>
+            <p style="text-align:center; font-size: 0.9em; color: #555;">梯度、方向导数与等高线的几何关系</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- 2.3 节已重写和扩充 -->
+<h2>2.3 终极近似：全导数与雅可比矩阵</h2>
+<p>
+    我们在一元微积分中学习到，可微函数在局部可以用其切线很好地近似。在点 $a$ 附近，我们有：$f(x) \approx f(a) + f'(a)(x-a)$。这里的导数 $f'(a)$ 是一个数，它将输入的变化量 $(x-a)$ 缩放为输出的变化量 $f(x)-f(a)$。
+</p>
+<p>
+    在多维空间中，这个思想被完美地继承和推广。一个在点 $\mathbf{a}$ 可微的多元函数，其局部行为可以用一个<strong>线性映射</strong>来近似。这个起着“导数”作用的线性映射，被称为<strong>全导数</strong> (Total Derivative)，而代表这个线性映射的矩阵，就是<strong>雅可比矩阵</strong> (Jacobian Matrix)。
+</p>
+<p>
+    对于一个向量值函数 $\mathbf{F}: R^n \rightarrow R^m$，其雅可比矩阵是一个 $m \times n$ 的矩阵，由所有一阶偏导数构成。它的第 $i$ 行是第 $i$ 个输出分量函数的梯度。
+</p>
+
+<div class="highlight-box">
+    <h3>💡 实例分析 1：数值计算与线性近似</h3>
+    <p>考虑一个从 $R^2$ 映射到 $R^2$ 的函数：</p>
+    <div class="formula-container">
+        $\mathbf{F}(x, y) = \begin{pmatrix} f_1(x,y) \\ f_2(x,y) \end{pmatrix} = \begin{pmatrix} x^2y \\ 5x + \sin(y) \end{pmatrix}$
+    </div>
+    <p><strong>第一步：计算雅可比矩阵 $J$。</strong></p>
+    <p>这是一个 $2 \times 2$ 矩阵，第一行是 $f_1$ 的偏导数，第二行是 $f_2$ 的偏导数。</p>
+    <div class="formula-container">
+        $J(x,y) = \begin{pmatrix} \frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\ \frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} \end{pmatrix} = \begin{pmatrix} 2xy & x^2 \\ 5 & \cos(y) \end{pmatrix}$
+    </div>
+    <p><strong>第二步：在特定点求值。</strong></p>
+    <p>让我们在点 $\mathbf{a} = (1, 0)$ 处评估雅可比矩阵：</p>
+    <div class="formula-container">
+        $J(1,0) = \begin{pmatrix} 2(1)(0) & 1^2 \\ 5 & \cos(0) \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 5 & 1 \end{pmatrix}$
+    </div>
+    <p><strong>第三步：使用雅可比矩阵进行线性近似。</strong></p>
+    <p>全导数的精髓在于这个近似公式：$\mathbf{F}(\mathbf{x}) \approx \mathbf{F}(\mathbf{a}) + J(\mathbf{a})(\mathbf{x}-\mathbf{a})$。
+    它告诉我们，如果我们从点 $\mathbf{a}=(1,0)$ 移动一个微小的位移向量 $d\mathbf{x} = \langle dx, dy \rangle$，那么函数值的变化量 $d\mathbf{F}$ 可以通过矩阵乘法来近似：</p>
+    <div class="formula-container">
+        $d\mathbf{F} = \begin{pmatrix} df_1 \\ df_2 \end{pmatrix} \approx J(1,0) \begin{pmatrix} dx \\ dy \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 5 & 1 \end{pmatrix} \begin{pmatrix} dx \\ dy \end{pmatrix} = \begin{pmatrix} dy \\ 5dx + dy \end{pmatrix}$
+    </div>
+    <p>这个结果的含义是：在点 $(1,0)$ 附近，函数第一个分量 $f_1$ 的变化主要受 $y$ 的变化影响，而第二个分量 $f_2$ 的变化则同时受到 $x$ 和 $y$ 变化的显著影响。雅可比矩阵将输入空间的微小变化线性地映射到了输出空间的微小变化。</p>
+</div>
+
+<div class="highlight-box">
+    <h3>💡 实例分析 2：坐标变换</h3>
+    <p>考虑一个从极坐标到直角坐标的变换函数 $\mathbf{F}: R^2 \rightarrow R^2$，定义为 $\mathbf{F}(r, \theta) = \langle x(r, \theta), y(r, \theta) \rangle = \langle r\cos\theta, r\sin\theta \rangle$。</p>
+    <p>这是一个输入为 $(r, \theta)$，输出为 $(x, y)$ 的向量函数。其雅可比矩阵 $J$ 是一个 $2 \times 2$ 矩阵：</p>
+    <div class="formula-container">
+        $ J = \begin{pmatrix} \frac{\partial x}{\partial r} & \frac{\partial x}{\partial \theta} \\ \frac{\partial y}{\partial r} & \frac{\partial y}{\partial \theta} \end{pmatrix} = \begin{pmatrix} \cos\theta & -r\sin\theta \\ \sin\theta & r\cos\theta \end{pmatrix} $
+    </div>
+    <p>这个矩阵描述了在任意一点 $(r, \theta)$ 附近，微小的极坐标变化 $(dr, d\theta)$ 是如何线性地映射到直角坐标变化 $(dx, dy)$ 上的。我们将在下一章看到，这个矩阵的行列式（即 $r$）在积分换元中起着至关重要的作用，它代表了面积微元的缩放比例。</p>
+</div>
+
+<div class="theorem-box">
+    <h3>微分概念的层级体系</h3>
+    <p>
+        多元微分的各个概念构成了一个逻辑清晰、层层递进的体系，它从一个受限的、标量的视角，逐步发展为一个完备的、基于线性代数的局部变化描述。
+    </p>
+    <ul>
+        <li>
+            <strong>第一层 (最简视角)：偏导数。</strong> 这是“切片”法，通过将其他维度固定，把多维问题降解为一系列一维问题。计算简单，但概念不完备。
+        </li>
+        <li>
+            <strong>第二层 (几何向量视角)：梯度与方向导数。</strong> 对于标量场，梯度 $\nabla f$ 成为了描述变化的“主宰向量”，任何特定方向的变化率都可以通过其投影得到。这是一个巨大的概念飞跃。
+        </li>
+        <li>
+            <strong>第三层 (线性代数视角)：雅可比矩阵与全导数。</strong> 这是最抽象也最强大的层级。它重新定义了导数的本质：导数是<strong>局部最佳线性逼近映射</strong>。雅可比矩阵是这个映射的具体数学表示，将所有类型的函数微分统一在同一个框架之下。
+        </li>
+    </ul>
+</div>
