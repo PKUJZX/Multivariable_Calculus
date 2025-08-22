@@ -23,6 +23,30 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
+
+<script>
+    (function() {
+        // 使用 sessionStorage 来防止无限刷新循环。
+        // sessionStorage 在标签页关闭前都有效。
+        const hasRefreshed = sessionStorage.getItem('pageRefreshed');
+
+        if (!hasRefreshed) {
+            // 1. 如果标记不存在，说明是第一次加载。
+            // 2. 设置一个标记，这样刷新后就不会再次执行。
+            sessionStorage.setItem('pageRefreshed', 'true');
+            // 3. 执行强制刷新（true表示从服务器加载，绕过缓存）。
+            location.reload(true);
+        } else {
+            // 如果标记存在，说明是刷新后的页面，
+            // 则在用户离开页面时（例如关闭标签页）移除标记，
+            // 以便下次重新打开时可以再次刷新。
+            window.addEventListener('beforeunload', function() {
+                sessionStorage.removeItem('pageRefreshed');
+            });
+        }
+    })();
+</script>
+    
 <body>
 
     <header>
@@ -55,3 +79,4 @@
     <script src="js/main.js"></script>
 </body>
 </html>
+
